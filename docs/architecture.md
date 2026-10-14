@@ -177,8 +177,12 @@ pub struct CommandSpec {
 }
 ```
 
-- All commands are in `crates/engine/src/commands.rs` (`cmd!` for actions, `query!` for read-only
-  queries such as `project.inspect`, `sequence.inspect`, `effects.list`, `jobs.list`). Ids follow
+- The core commands live in `crates/engine/src/commands/`, one file per menu (`file.rs`,
+  `edit_menu.rs`, `clip.rs`, `sequence.rs`, `markers.rs`, `timeline.rs`, `effects.rs`, …), with
+  `cmd!` for actions and `query!` for read-only queries such as `project.inspect`,
+  `sequence.inspect`, `effects.list` and `jobs.list`. `commands/mod.rs` holds `CommandSpec`, the
+  shared enablement and parameter helpers, and `build()`, which concatenates the menu files in menu
+  order and then the feature modules' `commands()` (`captions`, `mixer`, `voiceover`, …). Ids follow
   the menu structure: `file.*`, `edit.*`, `clip.*`, `sequence.*`, `markers.*`, `timeline.*`,
   `effects.*`…
 - `Session::execute(id, params)` finds the spec, checks `enabled`, runs it and appends it to the

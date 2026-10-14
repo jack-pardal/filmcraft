@@ -165,8 +165,9 @@ export CARGO_TARGET_DIR=target/agent-hevc     # separate build dir, no lock figh
 
 ### A command
 
-1. Add a `cmd!` (action) or `query!` (read-only) entry to `build()` in
-   `crates/engine/src/commands.rs`:
+1. Add a `cmd!` (action) or `query!` (read-only) entry to `commands()` in the file of its menu
+   under `crates/engine/src/commands/` (for example `sequence.rs` for the Sequence menu; the
+   position in the list is its position in the menu):
    ```rust
    cmd!("sequence.addEdit", "Add Edit", ["Sequence"], Some("Cmd+K"), r#"{"time":ticks?}"#, has_seq, |s, p| {
        let t = time_p(s, p, "").unwrap_or(s.playhead());
